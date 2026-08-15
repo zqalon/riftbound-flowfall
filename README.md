@@ -46,7 +46,7 @@ python bot.py
 ### Windows PowerShell
 
 ```powershell
-py -m venv .venv
+python -m venv .venv
 .venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 Copy-Item .env.example .env
