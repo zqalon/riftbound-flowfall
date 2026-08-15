@@ -111,15 +111,14 @@ def card_embed(card: dict) -> discord.Embed:
     ]
     type_label = " ".join(x for x in type_parts if x)
 
-    embed = discord.Embed()
-    # embed = discord.Embed(
-    #     title=card.get("name", "Unknown card"),
-    #     description=truncate(text.get("plain") or "No card text available.", 4096),
-    #     url=(
-    #         f"https://riftcodex.com/search?q="
-    #         f"{card.get('name', '').replace(' ', '+')}"
-    #     ),
-    # )
+    embed = discord.Embed(
+        title=card.get("name", "Unknown card"),
+        description=truncate(text.get("plain") or "No card text available.", 4096),
+        url=(
+            f"https://riftcodex.com/search?q="
+            f"{card.get('name', '').replace(' ', '+')}"
+        ),
+    )
 
     # if type_label:
     #     embed.add_field(name="Type", value=truncate(type_label, 1024), inline=True)
