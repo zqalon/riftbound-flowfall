@@ -111,58 +111,59 @@ def card_embed(card: dict) -> discord.Embed:
     ]
     type_label = " ".join(x for x in type_parts if x)
 
-    embed = discord.Embed(
-        title=card.get("name", "Unknown card"),
-        description=truncate(text.get("plain") or "No card text available.", 4096),
-        url=(
-            f"https://riftcodex.com/search?q="
-            f"{card.get('name', '').replace(' ', '+')}"
-        ),
-    )
+    embed = discord.Embed()
+    # embed = discord.Embed(
+    #     title=card.get("name", "Unknown card"),
+    #     description=truncate(text.get("plain") or "No card text available.", 4096),
+    #     url=(
+    #         f"https://riftcodex.com/search?q="
+    #         f"{card.get('name', '').replace(' ', '+')}"
+    #     ),
+    # )
 
-    if type_label:
-        embed.add_field(name="Type", value=truncate(type_label, 1024), inline=True)
-    if classification.get("rarity"):
-        embed.add_field(
-            name="Rarity",
-            value=truncate(str(classification["rarity"]), 1024),
-            inline=True,
-        )
-    if domains:
-        embed.add_field(
-            name="Domain",
-            value=truncate(", ".join(map(str, domains)), 1024),
-            inline=True,
-        )
-    if stats:
-        embed.add_field(name="Stats", value="\n".join(stats), inline=True)
+    # if type_label:
+    #     embed.add_field(name="Type", value=truncate(type_label, 1024), inline=True)
+    # if classification.get("rarity"):
+    #     embed.add_field(
+    #         name="Rarity",
+    #         value=truncate(str(classification["rarity"]), 1024),
+    #         inline=True,
+    #     )
+    # if domains:
+    #     embed.add_field(
+    #         name="Domain",
+    #         value=truncate(", ".join(map(str, domains)), 1024),
+    #         inline=True,
+    #     )
+    # if stats:
+    #     embed.add_field(name="Stats", value="\n".join(stats), inline=True)
 
-    set_label = card_set.get("label") or card_set.get("set_id")
-    riftbound_id = card.get("riftbound_id")
-    collector = card.get("collector_number")
+    # set_label = card_set.get("label") or card_set.get("set_id")
+    # riftbound_id = card.get("riftbound_id")
+    # collector = card.get("collector_number")
 
-    identifiers = []
-    if set_label:
-        identifiers.append(f"**Set:** {set_label}")
-    if riftbound_id:
-        identifiers.append(f"**ID:** `{riftbound_id}`")
-    if collector is not None:
-        identifiers.append(f"**Collector #:** {collector}")
+    # identifiers = []
+    # if set_label:
+    #     identifiers.append(f"**Set:** {set_label}")
+    # if riftbound_id:
+    #     identifiers.append(f"**ID:** `{riftbound_id}`")
+    # if collector is not None:
+    #     identifiers.append(f"**Collector #:** {collector}")
 
-    if identifiers:
-        embed.add_field(name="Details", value="\n".join(identifiers), inline=False)
+    # if identifiers:
+    #     embed.add_field(name="Details", value="\n".join(identifiers), inline=False)
 
-    flavour = text.get("flavour")
-    if flavour:
-        embed.add_field(name="Flavour", value=truncate(flavour, 1024), inline=False)
+    # flavour = text.get("flavour")
+    # if flavour:
+    #     embed.add_field(name="Flavour", value=truncate(flavour, 1024), inline=False)
 
     image_url = media.get("image_url")
     if image_url:
         embed.set_thumbnail(url=image_url)
 
-    artist = media.get("artist")
-    if artist:
-        embed.set_footer(text=f"Artist: {artist}")
+    # artist = media.get("artist")
+    # if artist:
+    #     embed.set_footer(text=f"Artist: {artist}")
 
     return embed
 
