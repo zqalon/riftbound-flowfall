@@ -2,6 +2,8 @@ import asyncio
 
 from playwright.async_api import async_playwright
 
+RIFTBOUND_SETS=["Origins", "Spiritforged", "Unleashed", "Vendetta"]
+
 async def search_website(search: str):
     url = "https://tcgplayer.com"
 
@@ -24,18 +26,27 @@ async def search_website(search: str):
         await search_box.fill(search)
         await search_box.press("Enter")
 
-        result = page.locator(".search-result__content").nth(0)
+        search_info = 0
 
-        await result.wait_for(
-            state="visible",
-            timeout=20_000,
-        )
+        flag = True
+        count = 0
+        while(flag):
+            search_item = page.locator(".search-result__content").nth(count)
+            await search_item.wait_for(
+                state="visible",
+                timeout=20_000,
+            )
+            search_info = await search_item.inner_text()
+            if (search_info[:search_info.find('\n')] in RIFTBOUND_SETS):
+                flag = False
+            count += 1
+            
 
-        price = await result.text_content()
 
         await browser.close()
 
-        return price[price.find(":") + 1:]
+        # return (price[price.find(":") + 1:])
+        return search_info
 
 async def main():
     result = await search_website(
