@@ -4,7 +4,7 @@ from playwright.async_api import async_playwright
 
 RIFTBOUND_SETS=["Origins", "Spiritforged", "Unleashed", "Vendetta"]
 
-async def search_website(search: str):
+async def search_tcgplayer(search: str):
     url = "https://tcgplayer.com"
 
     async with async_playwright() as p:
@@ -45,14 +45,11 @@ async def search_website(search: str):
 
         await browser.close()
 
-        # return (price[price.find(":") + 1:])
         return search_info
 
 async def main():
-    result = await search_website(
+    result = await search_tcgplayer(
         "time warp"
     )
 
     print(result)
-
-asyncio.run(main())

@@ -9,6 +9,8 @@ import aiohttp
 import discord
 from discord.ext import commands
 
+from crawler import search_tcgplayer
+
 load_dotenv()
 
 RIFTCODEX_BASE_URL = "https://api.riftcodex.com"
@@ -88,7 +90,7 @@ def truncate(text: str, limit: int) -> str:
     return text if len(text) <= limit else text[: limit - 1] + "…"
 
 
-def card_embed(card: dict) -> discord.Embed:
+async def card_embed(card: dict) -> discord.Embed:
     attrs = card.get("attributes") or {}
     classification = card.get("classification") or {}
     text = card.get("text") or {}
@@ -121,6 +123,8 @@ def card_embed(card: dict) -> discord.Embed:
             f"{card.get('name', '').replace(' ', '+')}"
         ),
     )
+
+
 
     # if type_label:
     #     embed.add_field(name="Type", value=truncate(type_label, 1024), inline=True)
@@ -157,6 +161,10 @@ def card_embed(card: dict) -> discord.Embed:
     # flavour = text.get("flavour")
     # if flavour:
     #     embed.add_field(name="Flavour", value=truncate(flavour, 1024), inline=False)
+
+    card_price = await search_tcgplayer(card.get("name"))
+    if card_price:
+        embed.description += '\n\n' + truncate(card_price[card_price.find("Market Price:"):], 1024)
 
     image_url = media.get("image_url")
     if image_url:
@@ -232,7 +240,7 @@ async def on_message(message: discord.Message) -> None:
             return
 
         if card:
-            embeds.append(card_embed(card))
+            embeds.append(await card_embed(card))
         else:
             not_found.append(name)
 
