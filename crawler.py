@@ -3,7 +3,7 @@ import asyncio
 from playwright.async_api import async_playwright
 
 async def search_website(search: str):
-    url = "tcgplayer.com"
+    url = "https://tcgplayer.com"
 
     async with async_playwright() as p:
         browser = await p.chromium.launch(
@@ -24,17 +24,22 @@ async def search_website(search: str):
         await search_box.fill(search)
         await search_box.press("Enter")
 
-        await page.wait_for_load_state("domcontentloaded")
+        result = page.locator(".search-result__content").nth(0)
 
-        text = await page.locator(".product-card__market-price--value").first.inner_text()
+        await result.wait_for(
+            state="visible",
+            timeout=20_000,
+        )
+
+        price = await result.text_content()
 
         await browser.close()
 
-        return text
+        return price[price.find(":") + 1:]
 
 async def main():
     result = await search_website(
-        "Time Warp"
+        "time warp"
     )
 
     print(result)
