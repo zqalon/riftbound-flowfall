@@ -3,11 +3,13 @@ import re
 import time
 import asyncio
 from typing import Any
+from dotenv import load_dotenv
 
 import aiohttp
 import discord
 from discord.ext import commands
 
+load_dotenv()
 
 RIFTCODEX_BASE_URL = "https://api.riftcodex.com"
 CACHE_TTL_SECONDS = int(os.getenv("CACHE_TTL_SECONDS", "300"))
