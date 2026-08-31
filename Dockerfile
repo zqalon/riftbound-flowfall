@@ -11,4 +11,4 @@ RUN python -m playwright install --with-deps chromium
 
 COPY . .
 
-CMD ["python", "main.py"]
+CMD ["python", "bot.py"]
