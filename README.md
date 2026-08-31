@@ -10,6 +10,8 @@ Examples:
 
 The bot uses the public Riftcodex API. Riftcodex currently documents exact and fuzzy name lookup at `/cards/name`; no API authentication is required for read operations.
 
+hosted on railway.com
+
 ## 1. Create the Discord application
 
 Create a bot application in the Discord Developer Portal, add a bot user, and copy its token.
